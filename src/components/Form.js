@@ -1,24 +1,53 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserDispatch } from '../App';
 
-const Button = ({ style, onClick, text }) => {
-  return <button style={style} onClick={onClick}>{text}</button>
+const inputTitle = {
+  placeholder: '할 일',
+  name: 'title'
 }
 
-const Form = ({}) => {
+const inputDesc = {
+  placeholder: '간단한 설명',
+  name: 'desc'
+}
+
+export const Button = React.memo(({ style, onClick, text }) => {
+  return <button style={style} onClick={onClick}>{text}</button>
+});
+
+export const Input = React.memo(({ onChange, value, attributes}) => {
+  const { placeholder, style, type, name } = attributes;
+
+  return (
+    <input 
+      type={type ? type : 'text'}
+      style={style ? style : null} 
+      onChange={onChange}
+      placeholder={placeholder}
+      value={value}
+      name={name}
+    />
+  );
+});
+
+const Form = (/*{ onCreate, onChange, inputs }*/) => {
+  // console.log(UserDispatch)
+  // const { title, desc, id, isDone } = inputs;
+  const dispatch = useContext(UserDispatch);
+  console.log(dispatch)
   return(
     <form action="" className='container'>
       <div>
         <div>
-          <input type="text" placeholder='할 일'/>
+          <Input /*onChange={onChange}  value={title}*/ attributes={inputTitle}/>
         </div>
         <div>
-          <input type="text" placeholder='내용'/>
+          <Input /*onChange={onChange}  value={desc}*/ attributes={inputDesc}/>
         </div>
       </div>
-      <Button text='등록'/>
-     
+      <Button /*text='등록' onClick={onCreate}*/ />
     </form>
   );
 }
 
-export default Form;
+export default React.memo(Form);
