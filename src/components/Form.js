@@ -15,39 +15,42 @@ export const Button = React.memo(({ style, onClick, text }) => {
   return <button style={style} onClick={onClick}>{text}</button>
 });
 
-export const Input = React.memo(({ onChange, value, attributes}) => {
-  const { placeholder, style, type, name } = attributes;
+export const Input = React.memo(
+  React.forwardRef(({ onChange, value, attributes}, ref) => {
+    const { placeholder, style, type, name } = attributes;
 
-  return (
-    <input 
-      type={type ? type : 'text'}
-      style={style ? style : null} 
-      onChange={onChange}
-      placeholder={placeholder}
-      value={value}
-      name={name}
-    />
-  );
-});
+    return (
+      <input 
+        type={type ? type : 'text'}
+        style={style ? style : null} 
+        onChange={onChange}
+        placeholder={placeholder}
+        value={value}
+        name={name}
+        ref={ref ? ref : null }
+      />
+    );
+  }
+));
 
-const Form = (/*{ onCreate, onChange, inputs }*/) => {
-  // console.log(UserDispatch)
-  // const { title, desc, id, isDone } = inputs;
-  const dispatch = useContext(UserDispatch);
-  console.log(dispatch)
+const Form = React.forwardRef(({ onCreate, onChange, inputs }, ref) => {
+  const { title, desc, id, isDone } = inputs;
+  
   return(
     <form action="" className='container'>
       <div>
         <div>
-          <Input /*onChange={onChange}  value={title}*/ attributes={inputTitle}/>
+          <Input onChange={onChange}  value={title} attributes={inputTitle} ref={ref}/>
         </div>
         <div>
-          <Input /*onChange={onChange}  value={desc}*/ attributes={inputDesc}/>
+          <Input onChange={onChange}  value={desc} attributes={inputDesc}/>
         </div>
       </div>
-      <Button /*text='등록' onClick={onCreate}*/ />
+      <Button text='등록' onClick={onCreate} />
     </form>
   );
-}
+});
+
+
 
 export default React.memo(Form);

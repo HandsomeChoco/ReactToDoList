@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
+
 //hooks
 import useToDo, { initState } from './hooks/useToDo';
 
@@ -7,19 +8,15 @@ import useToDo, { initState } from './hooks/useToDo';
 import Form from './components/Form';
 import ToDoList from './components/ToDoList';
 
-export const UserDispatch = React.createContext(null);
-
 function App() {
-  const [ form, onChange, onCreate, onToggle, onDelete ] = useToDo(initState);
+  const [ form, { handler }, element ] = useToDo(initState);
   const { inputs, todos } = form;
-
+  
   return (
-    <UserDispatch.Provider value={useToDo(form)}>
-      <div className='App'>
-        <Form /*onCreate={onCreate} onChange={onChange} inputs={inputs}*//>
-        <ToDoList /*todos={todos}*//>
-      </div>
-    </UserDispatch.Provider> 
+    <div className='App'>
+      <Form onCreate={handler.onCreate} onChange={handler.onChange}  inputs={inputs} ref={element} />
+      <ToDoList todos={todos} onDelete={handler.onDelete}/>
+    </div>
   );
 }
 
