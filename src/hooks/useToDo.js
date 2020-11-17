@@ -60,6 +60,13 @@ function useToDo(initState) {
     });
   }, []);
 
+  const onReset = useCallback(() => {
+    dispatch({
+      type: 'ON_RESET',
+      inputs: initState.inputs
+    });
+  }, [initState.inputs]);
+
   const onCreate = useCallback((e) => {
     e.preventDefault();
     dispatch({
@@ -72,14 +79,7 @@ function useToDo(initState) {
     onReset();
     element.current.focus();
     nextId.current++;
-  }, [inputs]);
-
-  const onReset = useCallback(() => {
-    dispatch({
-      type: 'ON_RESET',
-      inputs: initState.inputs
-    });
-  }, []);
+  }, [onReset, inputs]);
 
   const onToggle = useCallback((id) => {
     dispatch({
@@ -93,7 +93,7 @@ function useToDo(initState) {
       type: 'ON_DELETE',
       id
     });
-  }, [form]);
+  }, []);
 
   const handler = {
     onChange,
