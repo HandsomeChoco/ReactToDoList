@@ -8,7 +8,7 @@ export const initState = {
     isDone: false
   },
   todos: [
-    { id: 1, title: 'To Do 1', desc: 'To Do 1...', isDone: false }, 
+    { id: 1, title: 'To Do 1', desc: 'To Do 1...', isDone: true }, 
     { id: 2, title: 'To Do 2', desc: 'To Do 2...', isDone: false },
     { id: 3, title: 'To Do 3', desc: 'To Do 3...', isDone: false }, 
     { id: 4, title: 'To Do 4', desc: 'To Do 4...', isDone: false },
@@ -41,6 +41,11 @@ function reducer(state, action) {
       return {
         ...state,
         todos: state.todos.filter(data => data.id!==action.id)
+      }
+    case 'ON_TOGGLE' :
+      return {
+        ...state,
+        todos: state.todos.map(data => data.id===action.id ? { ...data, isDone: !data.isDone } : data )
       }
     default : return state;
   }
@@ -82,6 +87,7 @@ function useToDo(initState) {
   }, [onReset, inputs]);
 
   const onToggle = useCallback((id) => {
+    console.log('onToggle')
     dispatch({
       type: 'ON_TOGGLE',
       id

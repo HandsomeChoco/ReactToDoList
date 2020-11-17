@@ -35,7 +35,7 @@ export const Input = React.memo(
 
 const Form = React.forwardRef(({ onCreate, onChange, inputs }, ref) => {
   const { title, desc, id, isDone } = inputs;
-  
+
   return(
     <form action="" className='container'>
       <div>

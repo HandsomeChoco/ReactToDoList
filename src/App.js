@@ -11,11 +11,20 @@ import ToDoList from './components/ToDoList';
 function App() {
   const [ form, { handler }, element ] = useToDo(initState);
   const { inputs, todos } = form;
+  useEffect(() => {
+    element.current.focus();
+  },[]);
   
   return (
     <div className='App'>
-      <Form onCreate={handler.onCreate} onChange={handler.onChange}  inputs={inputs} ref={element} />
-      <ToDoList todos={todos} onDelete={handler.onDelete}/>
+      <Form 
+        onCreate={handler.onCreate} 
+        onChange={handler.onChange}  
+        inputs={inputs} 
+        ref={element}
+        
+      />
+      <ToDoList todos={todos} onDelete={handler.onDelete}  onToggle={handler.onToggle}/>
     </div>
   );
 }
