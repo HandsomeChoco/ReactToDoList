@@ -1,0 +1,4 @@
+# Ignore artifacts:
+build
+README.md
+node_modules
